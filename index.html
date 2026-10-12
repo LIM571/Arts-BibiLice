@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ARTs BibiLice | Ateliê de artesanato</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Nunito:wght@400;600;700;800&display=swap">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{
+  --bg:#fdeaf0; --card:#fff7fa; --ink:#5b2a3c; --muted:#8d5a6d; --pink:#f4b6cb; --deep:#c4577f; --stitch:#e58fae; --butter:#fff0c7; --shadow:rgba(196,87,127,.22);
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){--bg:#2b1721;--card:#3a202d;--ink:#fde8ee;--muted:#e2b3c4;--pink:#7a3f57;--deep:#f08fb0;--stitch:#b86a88;--butter:#4a3a2a;--shadow:rgba(0,0,0,.35)}
+}
+:root[data-theme="dark"]{--bg:#2b1721;--card:#3a202d;--ink:#fde8ee;--muted:#e2b3c4;--pink:#7a3f57;--deep:#f08fb0;--stitch:#b86a88;--butter:#4a3a2a;--shadow:rgba(0,0,0,.35)}
+html{scroll-padding-top:5rem;scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif;margin:0;
+  background-image:radial-gradient(var(--pink) 1.5px,transparent 1.6px);background-size:28px 28px;background-attachment:fixed}
+.serif{font-family:'Fraunces',Georgia,serif}
+/* ZÍPER */
+#zip{position:fixed;inset:0;z-index:50;--p:0;--h:0;touch-action:none;user-select:none}
+.pl,.pr{position:absolute;inset:0;background:var(--pink);transition:transform .9s cubic-bezier(.7,0,.3,1)}
+.pl{clip-path:polygon(0 0,calc(50% - var(--h)*1%) 0,50% calc(var(--p)*1%),50% 100%,0 100%)}
+.pr{clip-path:polygon(calc(50% + var(--h)*1%) 0,100% 0,100% 100%,50% 100%,50% calc(var(--p)*1%))}
+.pl::after,.pr::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.35),transparent 55%)}
+.teeth{position:absolute;top:calc(var(--p)*1%);bottom:0;width:10px}
+.tl{left:calc(50% - 10px);background:repeating-linear-gradient(180deg,#fff 0 8px,transparent 8px 16px);border-radius:0 5px 5px 0;box-shadow:0 0 0 1px rgba(196,87,127,.25)}
+.tr{left:50%;background:repeating-linear-gradient(180deg,transparent 0 8px,#fff 8px 16px);border-radius:5px 0 0 5px}
+.pull{position:absolute;left:50%;top:calc(var(--p)*1%);transform:translateX(-50%);cursor:grab;touch-action:none;display:flex;flex-direction:column;align-items:center}
+.pull:active{cursor:grabbing}
+.slider{width:34px;height:44px;background:#fff;border-radius:10px 10px 18px 18px;box-shadow:0 6px 14px rgba(196,87,127,.35)}
+.tab{width:44px;height:78px;margin-top:-6px;background:var(--deep);border-radius:14px 14px 22px 22px;box-shadow:0 8px 18px rgba(91,42,60,.3);display:grid;place-items:center}
+.tab i{width:16px;height:16px;border-radius:50%;background:var(--pink);box-shadow:inset 0 2px 4px rgba(0,0,0,.2)}
+.hint{position:absolute;left:50%;bottom:calc(10% + env(safe-area-inset-bottom,0px));transform:translateX(-50%);color:#fff;font-weight:700;text-align:center;width:max-content;max-width:90%;text-shadow:0 1px 6px rgba(196,87,127,.6);animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translate(-50%,6px)}}
+#zip.done .pl{transform:translateX(-101%)}
+#zip.done .pr{transform:translateX(101%)}
+#zip.done .teeth,#zip.done .pull,#zip.done .hint{opacity:0;transition:opacity .2s}
+
+
+/* MARCA */
+.ch{display:inline-block;opacity:0;filter:blur(10px);transform:translateY(.4em) rotate(-4deg)}
+body.go .ch{animation:ch .8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes ch{to{opacity:1;filter:blur(0);transform:none}}
+.fade{opacity:0;transform:translateY(14px);transition:opacity .9s ease 1.3s,transform .9s ease 1.3s}
+body.go .fade{opacity:1;transform:none}
+
+/* SITE */
+.wa{background:#1faa59;color:#fff;transition:background .2s,transform .2s}
+.wa:hover{background:#178a47;transform:translateY(-2px)}
+.stitch{border:2px dashed var(--stitch)}
+.arch{border-radius:999px 999px 1.25rem 1.25rem;overflow:hidden}
+.ph{background:linear-gradient(160deg,var(--pink),var(--butter))}
+.pcard{background:var(--card);border-radius:2rem;box-shadow:0 14px 34px -14px var(--shadow);transition:transform .3s}
+.pcard:hover{transform:translateY(-6px)}
+.tag{display:inline-flex;align-items:center;gap:.5rem;background:var(--deep);color:#fff;font-weight:800;padding:.35rem .9rem .35rem .7rem;border-radius:.4rem 999px 999px .4rem}
+.tag::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--card)}
+.chip{padding:.5rem 1.1rem;border-radius:999px;font-weight:700;background:var(--card);border:2px dashed var(--stitch);transition:all .2s}
+.chip[aria-pressed="true"]{background:var(--deep);border-color:var(--deep);color:#fff;border-style:solid}
+.sbtn{width:64px;height:64px;border-radius:50%;background:var(--pink);display:grid;place-items:center;box-shadow:0 8px 16px -6px var(--shadow)}
+.sbtn span{width:46px;height:46px;border-radius:50%;border:2px dashed #fff;display:grid;place-items:center;font:700 1.4rem 'Fraunces',serif;color:var(--ink)}
+.scal{position:relative;background:var(--card)}
+.scal::before{content:"";position:absolute;left:0;right:0;top:-14px;height:14px;background:radial-gradient(circle at 14px 14px,var(--card) 14px,transparent 14.5px) 0 0/28px 14px repeat-x}
+.mq{display:flex;width:max-content;animation:mq 28s linear infinite}
+@keyframes mq{to{transform:translateX(-50%)}}
+.blob{position:absolute;border-radius:50%;filter:blur(2px);z-index:-1}
+:focus-visible{outline:3px solid var(--deep);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.hint,.mq{animation:none}.ch{animation-duration:.01s!important}}
+</style>
+</head>
+<body class="overflow-hidden">
+
+<!-- TELA DO ZÍPER -->
+<div id="zip" aria-label="Puxe o zíper para entrar">
+  <div class="pl"></div><div class="pr"></div>
+  <div class="teeth tl"></div><div class="teeth tr"></div>
+  <div class="pull" id="pull" role="button" tabindex="0" aria-label="Abrir o zíper">
+    <div class="slider"></div><div class="tab"><i></i></div>
+  </div>
+  <p class="hint">Puxe o zíper para baixo</p>
+</div>
+
+<!-- CABEÇALHO -->
+<header class="sticky z-30 px-4 pt-3" style="top:env(safe-area-inset-top,0px)">
+  <div class="max-w-5xl mx-auto flex items-center justify-between rounded-full px-5 py-2.5 backdrop-blur" style="background:color-mix(in srgb,var(--card) 88%,transparent);box-shadow:0 10px 30px -14px var(--shadow)">
+    <a href="#inicio" class="serif font-bold text-lg sm:text-xl">ARTs BibiLice</a>
+    <nav class="flex items-center gap-4 sm:gap-6 text-sm font-bold">
+      <a href="#produtos" class="hidden sm:inline hover:opacity-70">Produtos</a>
+      <a href="#como" class="hidden sm:inline hover:opacity-70">Como pedir</a>
+      <a id="navWa" href="#" target="_blank" rel="noopener" class="wa rounded-full px-4 py-2">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section id="inicio" class="relative max-w-6xl mx-auto px-5 pt-12 pb-24 grid lg:grid-cols-2 gap-12 items-center overflow-hidden">
+    <div class="blob" style="width:340px;height:340px;background:var(--butter);right:-80px;top:-40px;opacity:.7"></div>
+    <div class="text-center lg:text-left">
+      <h1 id="brand" class="serif font-bold leading-[.95] tracking-tight" style="font-size:clamp(3.4rem,11vw,7.5rem)" aria-label="ARTs BibiLice">ARTs BibiLice</h1>
+      <div class="fade">
+        <p class="serif italic text-2xl mt-6" style="color:var(--deep)">Ateliê de artesanato</p>
+        <p class="mt-4 max-w-md mx-auto lg:mx-0 text-lg" style="color:var(--muted)">Peças feitas à mão, ponto por ponto, com carinho. Escolha uma das nossas ou peça a sua sob medida.</p>
+        <div class="mt-8 flex flex-wrap justify-center lg:justify-start gap-3">
+          <a href="#produtos" class="rounded-full px-7 py-3.5 font-extrabold text-white shadow-lg" style="background:var(--deep)">Ver produtos</a>
+          <a id="heroWa" href="#" target="_blank" rel="noopener" class="wa rounded-full px-7 py-3.5 font-extrabold shadow-lg">Falar no WhatsApp</a>
+        </div>
+      </div>
+    </div>
+    <div id="heroPics" class="fade relative h-[380px] sm:h-[460px] max-w-md w-full mx-auto"></div>
+  </section>
+
+  <!-- FAIXA -->
+  <div class="overflow-hidden py-4 font-serif italic text-xl" style="background:var(--deep);color:#fff">
+    <div class="mq" id="mq"></div>
+  </div>
+
+  <!-- PRODUTOS -->
+  <section id="produtos" class="scal mt-0 pt-20 pb-24">
+    <div class="max-w-6xl mx-auto px-5">
+      <div class="text-center mb-10">
+        <h2 class="serif font-bold text-4xl sm:text-5xl">Nossos produtos</h2>
+        <p class="mt-3 max-w-lg mx-auto" style="color:var(--muted)">Toque em “Pedir no WhatsApp” e a mensagem já vai pronta com o nome da peça.</p>
+        <div id="chips" class="mt-6 flex flex-wrap justify-center gap-2"></div>
+      </div>
+      <div id="grid" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3"></div>
+    </div>
+  </section>
+
+  <!-- COMO PEDIR -->
+  <section id="como" class="max-w-5xl mx-auto px-5 py-24">
+    <h2 class="serif font-bold text-4xl text-center mb-14">Como pedir é fácil</h2>
+    <div class="grid gap-10 md:grid-cols-3 text-center">
+      <div class="flex flex-col items-center"><div class="sbtn"><span>1</span></div><h3 class="serif font-bold text-xl mt-5">Escolha a peça</h3><p class="mt-2 text-sm max-w-[16rem]" style="color:var(--muted)">Veja os produtos e encontre o que combina com você.</p></div>
+      <div class="flex flex-col items-center"><div class="sbtn"><span>2</span></div><h3 class="serif font-bold text-xl mt-5">Chame no WhatsApp</h3><p class="mt-2 text-sm max-w-[16rem]" style="color:var(--muted)">Um toque no botão e a mensagem já sai pronta.</p></div>
+      <div class="flex flex-col items-center"><div class="sbtn"><span>3</span></div><h3 class="serif font-bold text-xl mt-5">Receba com carinho</h3><p class="mt-2 text-sm max-w-[16rem]" style="color:var(--muted)">Combinamos prazo e entrega, e sua peça chega embalada.</p></div>
+    </div>
+  </section>
+
+  <!-- ENCOMENDA -->
+  <section class="scal pt-20 pb-24">
+    <div class="max-w-3xl mx-auto px-5 text-center">
+      <p class="text-5xl">🧵</p>
+      <h2 class="serif font-bold text-4xl sm:text-5xl mt-3">Quer algo só seu?</h2>
+      <p class="mt-4 text-lg" style="color:var(--muted)">Cores, tamanhos e detalhes escolhidos por você. Conte a ideia e a gente cria.</p>
+      <a id="customWa" href="#" target="_blank" rel="noopener" class="wa inline-block mt-8 rounded-full px-8 py-4 font-extrabold shadow-lg">Pedir uma peça personalizada</a>
+    </div>
+  </section>
+</main>
+
+<footer class="text-center py-12" style="background:var(--deep);color:#fff">
+  <p class="serif font-bold text-2xl">ARTs BibiLice</p>
+  <p class="mt-1 opacity-90">Feito à mão com amor.</p>
+</footer>
+
+<a id="floatWa" href="#" target="_blank" rel="noopener" aria-label="Abrir conversa no WhatsApp" class="wa fixed right-4 z-30 w-14 h-14 rounded-full grid place-items-center shadow-lg" style="bottom:calc(1rem + env(safe-area-inset-bottom,0px))">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5a9.5 9.5 0 0 0-8.2 14.3L2.5 21.5l4.8-1.3A9.5 9.5 0 1 0 12 2.5Z"/><circle cx="8.5" cy="12" r="1.2" fill="#1faa59"/><circle cx="12" cy="12" r="1.2" fill="#1faa59"/><circle cx="15.5" cy="12" r="1.2" fill="#1faa59"/></svg>
+</a>
+
+<script>
+/* ====== EDITE AQUI ====== */
+const WHATSAPP = "5551984652406"; // DDI + DDD + número, só dígitos
+const CATEGORIAS = ["Guirlandas","Festa junina","Natal","Páscoa","Pano de prato","Bolsas","Bonecos","Materiais didáticos"];
+const PRODUTOS = [
+  // Para usar sua foto, coloque o caminho em "img", ex.: "fotos/guirlanda.jpg"
+  { nome:"Guirlanda de porta",       cat:"Guirlandas",          preco:"R$ 79,90", emoji:"🌸", img:"", desc:"Guirlanda artesanal com flores de tecido e laço de cetim, ideal para decorar a porta ou a parede. Tamanho 35 cm." },
+  { nome:"Bandeirinhas juninas",     cat:"Festa junina",        preco:"R$ 39,90", emoji:"🌽", img:"", desc:"Varal de 3 metros com bandeirinhas de tecido estampado. Deixa a festa junina da casa ou da escola mais colorida." },
+  { nome:"Papai Noel de feltro",     cat:"Natal",               preco:"R$ 49,90", emoji:"🎅", img:"", desc:"Papai Noel feito à mão em feltro, com 30 cm. Enfeita árvore, mesa ou prateleira." },
+  { nome:"Coelhinho porta-ovos",     cat:"Páscoa",              preco:"R$ 34,90", emoji:"🐰", img:"", desc:"Cestinha em formato de coelho, de crochê, para guardar ovos e docinhos. Ótima como lembrancinha de Páscoa." },
+  { nome:"Pano de prato com crochê", cat:"Pano de prato",       preco:"R$ 24,90", emoji:"🍽️", img:"", desc:"Pano de prato de algodão com barrado de crochê feito à mão. Absorvente e bonito para a cozinha." },
+  { nome:"Bolsa de crochê",          cat:"Bolsas",              preco:"R$ 89,90", emoji:"👜", img:"", desc:"Bolsa tiracolo em fio de algodão, forrada e com fecho de botão. Cabe celular, carteira e chaves." },
+  { nome:"Boneca de pano",           cat:"Bonecos",             preco:"R$ 59,90", emoji:"🧸", img:"", desc:"Boneca de pano costurada à mão, com cabelo de lã e vestidinho. 35 cm, ótima para presentear." },
+  { nome:"Alfabeto de feltro",       cat:"Materiais didáticos", preco:"R$ 69,90", emoji:"🔤", img:"", desc:"Letras de feltro coloridas para brincar e aprender a ler e escrever. Ótimo para casa e sala de aula." }
+];
+/* ======================== */
+
+const link = t => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(t)}`;
+const hello = "Olá! Vim pelo site da ARTs BibiLice e gostaria de conversar sobre as peças.";
+["navWa","heroWa","floatWa"].forEach(id => document.getElementById(id).href = link(hello));
+document.getElementById("customWa").href = link("Olá! Gostaria de encomendar uma peça personalizada da ARTs BibiLice. Posso contar a minha ideia?");
+
+const foto = (p, size="text-7xl") => p.img
+  ? `<img src="${p.img}" alt="${p.nome}" class="w-full h-full object-cover" loading="lazy">`
+  : `<div class="ph w-full h-full grid place-items-center ${size}" role="img" aria-label="Foto de ${p.nome}">${p.emoji}</div>`;
+
+/* Hero: 3 arcos com as primeiras peças */
+const pos = [
+  "left:0;top:50px;width:44%;height:70%;transform:rotate(-6deg)",
+  "left:28%;top:0;width:46%;height:78%;z-index:2",
+  "right:0;top:80px;width:42%;height:66%;transform:rotate(7deg)"
+];
+document.getElementById("heroPics").innerHTML = PRODUTOS.slice(0,3).map((p,i) =>
+  `<div class="absolute stitch arch p-2" style="${pos[i]};background:var(--card);box-shadow:0 20px 40px -16px var(--shadow)"><div class="arch w-full h-full">${foto(p,"text-6xl")}</div></div>`
+).join("") + `<div class="absolute z-10 rounded-full grid place-items-center text-center serif italic font-bold text-sm" style="right:6%;bottom:0;width:96px;height:96px;background:var(--butter);color:var(--ink);transform:rotate(12deg);border:2px dashed var(--stitch)">feito<br>à mão</div>`;
+
+/* Faixa */
+const words = ["Guirlandas","Festa junina","Natal","Páscoa","Pano de prato","Bolsas","Bonecos","Materiais didáticos"];
+const strip = words.map(w => `<span class="px-6 whitespace-nowrap">${w} <span style="opacity:.6">✿</span></span>`).join("");
+document.getElementById("mq").innerHTML = strip + strip + strip + strip;
+
+/* Filtros e produtos */
+const cats = ["Todos", ...CATEGORIAS];
+let atual = "Todos";
+function render(){
+  document.getElementById("chips").innerHTML = cats.map(c => `<button class="chip" aria-pressed="${c===atual}" data-c="${c}">${c}</button>`).join("");
+  document.getElementById("grid").innerHTML = PRODUTOS.filter(p => atual==="Todos" || p.cat===atual).map(p => {
+    const msg = `Olá! Vi o produto "${p.nome}" (${p.preco}) no site da ARTs BibiLice e gostaria de mais informações. Ainda está disponível?`;
+    return `<article class="pcard p-4 flex flex-col">
+      <div class="stitch arch p-2" style="border-radius:999px 999px 1.5rem 1.5rem"><div class="arch aspect-[4/5]">${foto(p)}</div></div>
+      <div class="px-2 pt-5 pb-2 flex flex-col flex-1">
+        <div class="flex items-center justify-between gap-3 flex-wrap">
+          <h3 class="serif font-bold text-2xl">${p.nome}</h3>
+          <span class="tag">${p.preco}</span>
+        </div>
+        <p class="mt-3 text-sm leading-relaxed flex-1" style="color:var(--muted)">${p.desc}</p>
+        <a href="${link(msg)}" target="_blank" rel="noopener" class="wa mt-5 text-center rounded-full py-3.5 font-extrabold">Pedir no WhatsApp</a>
+      </div>
+    </article>`;
+  }).join("");
+}
+document.getElementById("chips").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { atual = b.dataset.c; render(); } });
+render();
+
+/* Marca letra por letra */
+const brand = document.getElementById("brand");
+brand.innerHTML = [...brand.textContent].map((c,i) => `<span class="ch" aria-hidden="true" style="animation-delay:${i*70}ms">${c === " " ? "&nbsp;" : c}</span>`).join("");
+
+/* Zíper */
+const zip = document.getElementById("zip"), pull = document.getElementById("pull");
+let p = 0, drag = false, startY = 0, moved = 0, busy = false;
+const MAX = 92;
+function setP(v){ p = v; zip.style.setProperty("--p", v); zip.style.setProperty("--h", v * 0.5); }
+function animate(to, ms, cb){
+  const from = p, t0 = performance.now();
+  (function step(t){
+    const k = Math.min(1, (t - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+    setP(from + (to - from) * e);
+    k < 1 ? requestAnimationFrame(step) : cb && cb();
+  })(t0);
+}
+function finish(){
+  if (busy) return; busy = true;
+  animate(100, 700, () => {
+    zip.classList.add("done");
+    document.body.classList.remove("overflow-hidden");
+    document.body.classList.add("go");
+    setTimeout(() => zip.remove(), 1000);
+  });
+}
+pull.addEventListener("pointerdown", e => { if (busy) return; drag = true; startY = e.clientY; moved = 0; pull.setPointerCapture(e.pointerId); });
+pull.addEventListener("pointermove", e => {
+  if (!drag) return;
+  moved = Math.max(moved, Math.abs(e.clientY - startY));
+  setP(Math.max(0, Math.min(MAX, e.clientY / innerHeight * 100)));
+});
+pull.addEventListener("pointerup", () => {
+  if (!drag) return; drag = false;
+  (moved < 6 || p > 55) ? finish() : animate(0, 400);
+});
+pull.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); finish(); } });
+</script>
+</body>
+</html>
